@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/cart.dart';
 
 class CartBottomNavBar extends StatelessWidget {
   const CartBottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return BottomAppBar(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15,),
@@ -26,13 +30,15 @@ class CartBottomNavBar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$250',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF4C53A5),
+                  '\$210',
+                    // '\$${cart.totalAmount.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4C53A5),
+                    ),
                   ),
-                ),
+                
               ],
             ),
             Container(

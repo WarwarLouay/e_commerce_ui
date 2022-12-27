@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_rethrow_when_possible, unused_local_variable
+// ignore_for_file: avoid_print, use_rethrow_when_possible, unused_local_variable, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
 
@@ -28,8 +28,8 @@ class Cart with ChangeNotifier {
       productId: json['productId'].toString(),
       name: json['productId']['productName'],
       image: json['productId']['productImage'],
-      price: double.parse(json['productId']['productPrice']),
-      qty: int.parse(json['qty']),
+      price: json['productId']['productPrice'] as double,
+      qty: json['qty'] as int,
     );
   }
 
@@ -39,9 +39,17 @@ class Cart with ChangeNotifier {
     return cartItem.length;
   }
 
+  double get totalAmount {
+    var total = 0.0;
+      cartItem.forEach((element) {
+        total += element['qty'] * element['productId']['productPrice'];
+    });
+    return total;
+  }
+
   Future<void> addToCart(
     String productId,
-    String qty,
+    int qty,
   ) async {
     try {
       const api = 'http://192.168.0.107:4000/api/cart';

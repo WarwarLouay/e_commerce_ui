@@ -11,7 +11,7 @@ class Product with ChangeNotifier {
   String? name;
   String? image;
   String? description;
-  String? price;
+  double? price;
 
   Product({
     this.id,
@@ -29,7 +29,7 @@ class Product with ChangeNotifier {
       name: json['productName'],
       image: json['productImage'],
       description: json['productDescription'],
-      price: json['productPrice'],
+      price: json['productPrice'] as double,
     );
   }
 

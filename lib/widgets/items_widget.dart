@@ -109,7 +109,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '\$' + snapshot.data![index].price,
+                            '\$ ${snapshot.data![index].price}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                           InkWell(
                             onTap: () async {
                               await Provider.of<Cart>(context, listen: false)
-                                  .addToCart(snapshot.data![index].id, '1');
+                                  .addToCart(snapshot.data![index].id, 1);
                             },
                             child: Icon(
                               Icons.shopping_cart_checkout,

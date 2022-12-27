@@ -26,7 +26,7 @@ class _ItemPageState extends State<ItemPage> {
     String? id = routeArgs['id'];
     String? name = routeArgs['name'];
     String? description = routeArgs['description'];
-    String? price = routeArgs['price'];
+    double? price = routeArgs['price'];
     String? image = routeArgs['image'];
 
     return Scaffold(
@@ -283,7 +283,7 @@ class _ItemPageState extends State<ItemPage> {
                 ),
                 onPressed: () async {
                   await Provider.of<Cart>(context, listen: false)
-                      .addToCart(id!, qty.toString());
+                      .addToCart(id!, qty);
                 },
               )
             ],

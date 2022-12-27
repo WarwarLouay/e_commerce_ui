@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, annotate_overrides, prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously
 
-import 'package:e_commerce_ui/pages/cart_page.dart';
 import 'package:e_commerce_ui/providers/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -124,8 +123,8 @@ class _CartItemSimplesState extends State<CartItemSimples> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (int.parse(cartItem.cartItem[index]['qty']) > 1) {
-                                      int.parse(cartItem.cartItem[index]['qty']) - 1; 
+                                    if (cartItem.cartItem[index]['qty'] > 1) {
+                                      cartItem.cartItem[index]['qty'] --; 
                                     }
                                   });
                                 },
@@ -161,7 +160,7 @@ class _CartItemSimplesState extends State<CartItemSimples> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    int.parse(cartItem.cartItem[index]['qty']) + 1;
+                                    cartItem.cartItem[index]['qty'] ++;
                                   });
                                 },
                                 child: Container(
