@@ -3,8 +3,10 @@
 import 'package:e_commerce_ui/pages/cart_page.dart';
 import 'package:e_commerce_ui/pages/home_page.dart';
 import 'package:e_commerce_ui/pages/item_page.dart';
+import 'package:e_commerce_ui/pages/login_page.dart';
 import 'package:e_commerce_ui/providers/cart.dart';
 import 'package:e_commerce_ui/providers/product.dart';
+import 'package:e_commerce_ui/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => User(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -32,7 +37,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         routes: {
-          '/': (context) => HomePage(),
+          '/': (context) => LoginPage(),
+          // '/': (context) => HomePage(),
           'cartPage': (context) => CartPage(),
           'itemPage': (context) => ItemPage(),
         },
