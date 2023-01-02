@@ -32,10 +32,15 @@ class _RegisterPageState extends State<RegisterPage> {
   String? _password;
   String? _confirmPassword;
 
+  var _isLoading = false;
+
   Future<void> register() async {
     final form = _formKey.currentState;
     if (form!.validate()) {
       try {
+        setState(() {
+          _isLoading = true;
+        });
         form.save();
         await Provider.of<User>(context, listen: false).createAccount(
             _fullName!, _email!, _country!, _code!, _phone!, _password!);
@@ -50,7 +55,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('OK')),
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                            color: Color(0xFF4C53A5),
+                          ),
+                        )),
                   ],
                 ));
       } on HttpException catch (error) {
@@ -66,7 +76,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('OK')),
+                          child: Text(
+                            'OK',
+                            style: TextStyle(
+                              color: Color(0xFF4C53A5),
+                            ),
+                          )),
                     ],
                   ));
         }
@@ -82,10 +97,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('OK')),
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                            color: Color(0xFF4C53A5),
+                          ),
+                        )),
                   ],
                 ));
       }
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -306,21 +329,27 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         height: 25,
                       ),
-                      SizedBox(
-                        width: 150,
-                        height: 45,
-                        child: ElevatedButton.icon(
-                          onPressed: register,
-                          icon: Icon(Icons.account_box_outlined),
-                          label: Text(
-                            'Create',
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xFF4C53A5)),
-                          ),
-                        ),
-                      ),
+                      _isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xFF4C53A5),
+                              ),
+                            )
+                          : SizedBox(
+                              width: 150,
+                              height: 45,
+                              child: ElevatedButton.icon(
+                                onPressed: register,
+                                icon: Icon(Icons.account_box_outlined),
+                                label: Text(
+                                  'Create',
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color(0xFF4C53A5)),
+                                ),
+                              ),
+                            ),
                       const SizedBox(
                         height: 30,
                       ),
