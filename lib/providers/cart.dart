@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Cart with ChangeNotifier {
   String? id;
@@ -51,6 +52,8 @@ class Cart with ChangeNotifier {
     String productId,
     int qty,
   ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("uid");
     try {
       const api = 'http://192.168.0.107:4000/api/cart';
       final Uri url = Uri.parse(api);
@@ -59,6 +62,7 @@ class Cart with ChangeNotifier {
             'Content-Type': 'application/json; charset=UTF-8'
           },
           body: json.encode({
+            'user': user,
             'productId': productId,
             'qty': qty,
           }));
@@ -97,11 +101,16 @@ class Cart with ChangeNotifier {
   }
 
   Future<List<Cart>> fetchCart() async {
-    final response = await http.get(
-        Uri.parse('http://192.168.0.107:4000/api/cart'),
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("uid");
+    final response = await http.post(
+        Uri.parse('http://192.168.0.107:4000/api/cart/get'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
-        });
+        },
+        body: json.encode({
+            'user': user,
+          }));
 
     var responseJson = jsonDecode(response.body);
     cartItem = responseJson;

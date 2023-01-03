@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../exception/http_exception.dart';
 
@@ -64,6 +65,38 @@ class User with ChangeNotifier {
       if (responseData['message'] == 'Email already exist') {
         throw HttpException('exist');
       }
+      print(responseData);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
+
+  Future<void> login(String email, String password) async {
+    try {
+      const api = 'http://192.168.0.107:4000/api/user/login';
+      final Uri url = Uri.parse(api);
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: json.encode({
+            'email': email,
+            'password': password,
+          }));
+      final responseData = json.decode(response.body);
+      if (responseData['user']['message'] == 'Incorrect email') {
+        throw HttpException('Incorrect email');
+      }
+      if (responseData['user']['message'] == 'Incorrect password') {
+        throw HttpException('Incorrect password');
+      }
+
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("token", responseData['token']);
+      prefs.setString("uid", responseData['user']['_id']);
+
       print(responseData);
       notifyListeners();
     } catch (error) {
