@@ -13,7 +13,10 @@ class CartBottomNavBar extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     return BottomAppBar(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15,),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 15,
+        ),
         height: 150,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,14 +34,13 @@ class CartBottomNavBar extends StatelessWidget {
                 ),
                 Text(
                   '\$210',
-                    // '\$${cart.totalAmount.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF4C53A5),
-                    ),
+                  // '\$${cart.totalAmount.toStringAsFixed(2)}',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4C53A5),
                   ),
-                
+                ),
               ],
             ),
             Container(
@@ -49,7 +51,9 @@ class CartBottomNavBar extends StatelessWidget {
                 color: Color(0xFF4C53A5),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(
+              child: InkWell(
+                onTap: () {},
+                child: Text(
                   'Check Out',
                   style: TextStyle(
                     fontSize: 18,
@@ -57,6 +61,7 @@ class CartBottomNavBar extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+              ),
             ),
           ],
         ),
