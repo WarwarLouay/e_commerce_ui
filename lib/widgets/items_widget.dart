@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, annotate_overrides, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, annotate_overrides, prefer_interpolation_to_compose_strings, use_build_context_synchronously, unused_local_variable
 
 import 'package:e_commerce_ui/providers/cart.dart';
 import 'package:e_commerce_ui/providers/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemsWidget extends StatefulWidget {
   const ItemsWidget({super.key});
@@ -18,11 +19,19 @@ class _ItemsWidgetState extends State<ItemsWidget> {
   void initState() {
     super.initState();
     futureProducts = fetchProducts();
+    Provider.of<Product>(context, listen: false).fetchFavorite();
+  }
+
+  Future<void> update(id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("uid");
+    await Provider.of<Product>(context, listen: false).updateStatus(user!, id!);
   }
 
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Product>(context);
+    final favoriteItem = Provider.of<Product>(context);
     return FutureBuilder(
         future: futureProducts,
         builder: (context, snapshot) {
@@ -65,9 +74,12 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                             ),
                           ),
                         ),
-                        Icon(
-                          Icons.favorite_border,
-                          color: Colors.red,
+                        InkWell(
+                          onTap: () {update(snapshot.data![index].id);},
+                          child: Icon(
+                            Icons.favorite_border,
+                            color: Colors.red,
+                          ),
                         ),
                       ],
                     ),

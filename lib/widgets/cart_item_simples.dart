@@ -13,7 +13,6 @@ class CartItemSimples extends StatefulWidget {
 }
 
 class _CartItemSimplesState extends State<CartItemSimples> {
-  late Future futureCart;
   var _isInit = true;
   var _isLoading = false;
 
