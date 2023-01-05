@@ -16,6 +16,7 @@ class User with ChangeNotifier {
   String? countryCode;
   String? phone;
   String? password;
+  String? _token;
 
   User({
     this.id,
@@ -26,6 +27,17 @@ class User with ChangeNotifier {
     this.phone,
     this.password,
   });
+
+  bool get isAuth {
+    return token != null;
+  }
+
+  String? get token {
+    if (_token != null) {
+      return _token!;
+    }
+    return null;
+  }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -103,5 +115,21 @@ class User with ChangeNotifier {
       print(error);
       throw error;
     }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    _token = prefs.getString('token');
+    print(_token);
+    notifyListeners();
+    return true;
+  }
+
+  Future<void> logout() async {
+    _token = null;
+
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

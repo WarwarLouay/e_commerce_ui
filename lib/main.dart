@@ -7,6 +7,7 @@ import 'package:e_commerce_ui/pages/login_page.dart';
 import 'package:e_commerce_ui/providers/cart.dart';
 import 'package:e_commerce_ui/providers/product.dart';
 import 'package:e_commerce_ui/providers/user.dart';
+import 'package:e_commerce_ui/widgets/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,17 +32,28 @@ class MyApp extends StatelessWidget {
           create: (context) => User(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
+      child: Consumer<User>(
+        builder: (context, auth, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          home: auth.isAuth
+              ? HomePage()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return LoginPage();
+                    } else {
+                      return LoginPage();
+                    }
+                  }),
+          routes: {
+            'cartPage': (context) => CartPage(),
+            'itemPage': (context) => ItemPage(),
+          },
         ),
-        routes: {
-          '/': (context) => LoginPage(),
-          // '/': (context) => HomePage(),
-          'cartPage': (context) => CartPage(),
-          'itemPage': (context) => ItemPage(),
-        },
       ),
     );
   }

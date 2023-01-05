@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore
 
 import 'package:e_commerce_ui/pages/login_page.dart';
+import 'package:e_commerce_ui/providers/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListTab extends StatelessWidget {
   const ListTab({super.key});
@@ -20,6 +22,7 @@ class ListTab extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (builder) => LoginPage()),
                   (route) => false);
+              Provider.of<User>(context, listen: false).logout();
             },
             icon: Icon(
               Icons.logout,
