@@ -109,7 +109,22 @@ class User with ChangeNotifier {
       prefs.setString("token", responseData['token']);
       prefs.setString("uid", responseData['user']['_id']);
 
+      const api2 = 'http://192.168.0.107:4000/api/shipping/get';
+      final Uri url2 = Uri.parse(api2);
+      final response2 = await http.post(url2,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: json.encode({
+            'user': responseData['user']['_id'],
+          }));
+      final responseData2 = json.decode(response2.body);
+      prefs.setString("address", responseData2['Address']);
+      prefs.setString("street", responseData2['Street']);
+      prefs.setString("building", responseData2['Building']);
+
       print(responseData);
+      print(responseData2);
       notifyListeners();
     } catch (error) {
       print(error);
