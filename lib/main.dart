@@ -7,6 +7,7 @@ import 'package:e_commerce_ui/pages/login_page.dart';
 import 'package:e_commerce_ui/pages/order_details_page.dart';
 import 'package:e_commerce_ui/providers/cart.dart';
 import 'package:e_commerce_ui/providers/product.dart';
+import 'package:e_commerce_ui/providers/shipping.dart';
 import 'package:e_commerce_ui/providers/user.dart';
 import 'package:e_commerce_ui/widgets/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => User(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => Shipping(),
         ),
       ],
       child: Consumer<User>(

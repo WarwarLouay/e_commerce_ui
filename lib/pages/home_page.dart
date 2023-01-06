@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:e_commerce_ui/pages/favorire_tab.dart';
 import 'package:e_commerce_ui/pages/home_tab.dart';
 import 'package:e_commerce_ui/pages/list_tab.dart';
+import 'package:e_commerce_ui/providers/shipping.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _pages = [FavoriteTab(), HomeTab(), ListTab()];
+    getShipping();
     super.initState();
   }
 

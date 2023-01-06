@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_is_empty
 
 import 'package:e_commerce_ui/pages/home_page.dart';
+import 'package:e_commerce_ui/pages/shipping_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +66,10 @@ class _CartBottomNavBarState extends State<CartBottomNavBar> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => ShippingPage()));
                       },
                       child: Text(
                         'Edit',
@@ -125,6 +130,10 @@ class _CartBottomNavBarState extends State<CartBottomNavBar> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => ShippingPage()));
                       },
                       child: Text(
                         'Ok',
