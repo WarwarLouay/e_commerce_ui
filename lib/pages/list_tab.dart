@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, prefer_const_literals_to_create_immutables
 
 import 'package:e_commerce_ui/pages/login_page.dart';
+import 'package:e_commerce_ui/pages/orders_page.dart';
 import 'package:e_commerce_ui/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +95,10 @@ class ListTab extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (builder) => OrdersPage()));
+            },
             child: Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 20),
               child: Container(

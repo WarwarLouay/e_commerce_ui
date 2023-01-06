@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_is_empty
 
+import 'package:e_commerce_ui/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,8 +74,36 @@ class _CartBottomNavBarState extends State<CartBottomNavBar> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.of(context).pop();
+                        await Provider.of<Cart>(context, listen: false)
+                            .addOrder();
+
+                        return showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text('Success!'),
+                                  content:
+                                      Text('We recieve your order. Thank you.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    HomePage()));
+                                      },
+                                      child: Text(
+                                        'Ok',
+                                        style: TextStyle(
+                                          color: Color(0xFF4C53A5),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ));
                       },
                       child: Text(
                         'Continue',

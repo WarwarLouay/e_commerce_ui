@@ -35,6 +35,9 @@ class Cart with ChangeNotifier {
   }
 
   var cartItem = [];
+  var orderItem = [];
+  var orderItemProduct = [];
+  var productOrder = [];
 
   int get itemCount {
     return cartItem.length;
@@ -42,8 +45,8 @@ class Cart with ChangeNotifier {
 
   double get totalAmount {
     var total = 0.0;
-      cartItem.forEach((element) {
-        total += element['qty'] * element['productId']['productPrice'];
+    cartItem.forEach((element) {
+      total += element['qty'] * element['productId']['productPrice'];
     });
     return total;
   }
@@ -109,12 +112,64 @@ class Cart with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
         body: json.encode({
-            'user': user,
-          }));
+          'user': user,
+        }));
 
     var responseJson = jsonDecode(response.body);
     cartItem = responseJson;
     print(cartItem);
     return (responseJson as List).map((p) => Cart.fromJson(p)).toList();
+  }
+
+  Future<void> addOrder() async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("uid");
+    final shipping = prefs.getString("shipping");
+
+    cartItem.forEach((prod) => productOrder
+        .add({'product': prod['productId']['_id'], 'qty': prod['qty']}));
+
+    print(productOrder);
+
+    final response = await http.post(
+      Uri.parse('http://192.168.0.107:4000/api/order'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: json.encode(
+        {
+          'user': user,
+          'shipping': shipping,
+          'product': productOrder,
+          'total': totalAmount.toStringAsFixed(2),
+          'date': DateTime.now().toIso8601String(),
+        },
+      ),
+    );
+
+    productOrder = [];
+
+    var responseJson = jsonDecode(response.body);
+    return responseJson;
+  }
+
+  Future<void> fetchOrders() async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("uid");
+    final response = await http.post(
+        Uri.parse('http://192.168.0.107:4000/api/order/get'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: json.encode({
+          'user': user,
+        }));
+
+    var responseJson = jsonDecode(response.body);
+    orderItem = responseJson;
+    print(orderItem);
+    orderItem.forEach((product) => orderItemProduct.add(product['product']));
+    print(orderItemProduct);
+    return responseJson;
   }
 }

@@ -19,7 +19,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
   void initState() {
     super.initState();
     futureProducts = fetchProducts();
-    Provider.of<Product>(context, listen: false).fetchFavorite();
   }
 
   Future<void> update(id) async {
@@ -31,7 +30,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Product>(context);
-    final favoriteItem = Provider.of<Product>(context);
     return FutureBuilder(
         future: futureProducts,
         builder: (context, snapshot) {

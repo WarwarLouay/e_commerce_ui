@@ -119,6 +119,7 @@ class User with ChangeNotifier {
             'user': responseData['user']['_id'],
           }));
       final responseData2 = json.decode(response2.body);
+      prefs.setString("shipping", responseData2['_id']);
       prefs.setString("address", responseData2['Address']);
       prefs.setString("street", responseData2['Street']);
       prefs.setString("building", responseData2['Building']);

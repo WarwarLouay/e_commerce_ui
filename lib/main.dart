@@ -4,6 +4,7 @@ import 'package:e_commerce_ui/pages/cart_page.dart';
 import 'package:e_commerce_ui/pages/home_page.dart';
 import 'package:e_commerce_ui/pages/item_page.dart';
 import 'package:e_commerce_ui/pages/login_page.dart';
+import 'package:e_commerce_ui/pages/order_details_page.dart';
 import 'package:e_commerce_ui/providers/cart.dart';
 import 'package:e_commerce_ui/providers/product.dart';
 import 'package:e_commerce_ui/providers/user.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
           routes: {
             'cartPage': (context) => CartPage(),
             'itemPage': (context) => ItemPage(),
+            'order-details': (context) => OrderDetailsPage(),
           },
         ),
       ),
