@@ -12,7 +12,7 @@ class Product with ChangeNotifier {
   String? name;
   String? image;
   String? description;
-  double? price;
+  String? price;
 
   Product({
     this.id,
@@ -30,10 +30,11 @@ class Product with ChangeNotifier {
       name: json['productName'],
       image: json['productImage'],
       description: json['productDescription'],
-      price: json['productPrice'] as double,
+      price: json['productPrice'] as String,
     );
   }
 
+  var productItem = [];
   var favoriteItem = [];
 
   Future<void> updateStatus(String user, String product) async {
@@ -57,6 +58,19 @@ class Product with ChangeNotifier {
     }
   }
 
+  Future<List> fetchProducts() async {
+    final response = await http.get(
+        Uri.parse('http://192.168.0.107:4000/api/product'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        });
+
+    var responseJson = jsonDecode(response.body);
+    productItem = responseJson;
+    print(productItem);
+    return productItem;
+  }
+
   Future<List> fetchFavorite() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString("uid");
@@ -74,16 +88,4 @@ class Product with ChangeNotifier {
     print(favoriteItem);
     return favoriteItem;
   }
-}
-
-Future<List<Product>> fetchProducts() async {
-  final response = await http.get(
-      Uri.parse('http://192.168.0.107:4000/api/product'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8'
-      });
-
-  var responseJson = jsonDecode(response.body);
-  print(responseJson);
-  return (responseJson as List).map((p) => Product.fromJson(p)).toList();
 }

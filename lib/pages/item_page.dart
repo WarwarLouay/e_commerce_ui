@@ -26,7 +26,7 @@ class _ItemPageState extends State<ItemPage> {
     String? id = routeArgs['id'];
     String? name = routeArgs['name'];
     String? description = routeArgs['description'];
-    double? price = routeArgs['price'];
+    String? price = routeArgs['price'];
     String? image = routeArgs['image'];
 
     return Scaffold(

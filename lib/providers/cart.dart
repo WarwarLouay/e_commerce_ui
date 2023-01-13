@@ -46,7 +46,7 @@ class Cart with ChangeNotifier {
   double get totalAmount {
     var total = 0.0;
     cartItem.forEach((element) {
-      total += element['qty'] * element['productId']['productPrice'];
+      total += element['qty'] * double.parse(element['productId']['productPrice']);
     });
     return total;
   }
@@ -103,7 +103,7 @@ class Cart with ChangeNotifier {
     }
   }
 
-  Future<List<Cart>> fetchCart() async {
+  Future<List> fetchCart() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString("uid");
     final response = await http.post(
@@ -118,7 +118,7 @@ class Cart with ChangeNotifier {
     var responseJson = jsonDecode(response.body);
     cartItem = responseJson;
     print(cartItem);
-    return (responseJson as List).map((p) => Cart.fromJson(p)).toList();
+    return cartItem;
   }
 
   Future<void> addOrder() async {
