@@ -124,6 +124,7 @@ class Cart with ChangeNotifier {
   Future<void> addOrder() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString("uid");
+    final email = prefs.getString("email");
     final shipping = prefs.getString("shipping");
 
     cartItem.forEach((prod) => productOrder
@@ -139,6 +140,7 @@ class Cart with ChangeNotifier {
       body: json.encode(
         {
           'user': user,
+          'email': email,
           'shipping': shipping,
           'product': productOrder,
           'total': totalAmount.toStringAsFixed(2),

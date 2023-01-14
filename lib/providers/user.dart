@@ -108,6 +108,7 @@ class User with ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("token", responseData['token']);
       prefs.setString("uid", responseData['user']['_id']);
+      prefs.setString("email", responseData['user']['email']);
 
       const api2 = 'http://192.168.0.107:4000/api/shipping/get';
       final Uri url2 = Uri.parse(api2);

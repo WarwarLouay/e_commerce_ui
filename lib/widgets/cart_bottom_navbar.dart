@@ -171,7 +171,6 @@ class _CartBottomNavBarState extends State<CartBottomNavBar> {
                   ),
                 ),
                 Text(
-                  //'\$210',
                   '\$${cart.totalAmount.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontSize: 22,

@@ -91,6 +91,7 @@ class _OrdersPageState extends State<OrdersPage> {
                                           orderItem.orderItem[index]['shipping']
                                               ['Building'],
                                       'total': orderItem.orderItem[index]['total'],
+                                      'status': orderItem.orderItem[index]['status'],
                                     });
                               },
                             ),

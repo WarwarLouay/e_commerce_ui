@@ -22,13 +22,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     var shippingStreet = routeArgs['shippingStreet']!;
     var shippingBuilding = routeArgs['shippingBuilding']!;
     var total = routeArgs['total']!;
+    var status = routeArgs['status']!;
     return Scaffold(
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
           OrdersAppBar(),
           Container(
-            height: MediaQuery.of(context).size.height - 140,
             padding: EdgeInsets.only(top: 15),
             decoration: BoxDecoration(
               color: Color(0xFFEDECF2),
@@ -40,14 +40,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             child: Column(
               children: [
                 Container(
-                  height: 500,
+                  height: 350,
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemCount: orderProduct.length,
                     itemBuilder: (context, index) => Column(
                       children: [
                         Container(
-                          height: 110,
                           margin: EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical: 10,
@@ -118,6 +117,21 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: status == '-1' ? Colors.red : status == '0' ? Colors.orange : Colors.green,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    width: 100,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Text(status == '-1' ? 'Rejected' : status == '0' ? 'Pending': 'Delivered'),
+                      ),
                   ),
                 ),
                 Padding(
