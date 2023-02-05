@@ -68,6 +68,7 @@ class Product with ChangeNotifier {
     var responseJson = jsonDecode(response.body);
     productItem = responseJson;
     print(productItem);
+    notifyListeners();
     return productItem;
   }
 
@@ -86,6 +87,7 @@ class Product with ChangeNotifier {
     var responseJson = jsonDecode(response.body);
     favoriteItem = responseJson;
     print(favoriteItem);
+    notifyListeners();
     return favoriteItem;
   }
 }

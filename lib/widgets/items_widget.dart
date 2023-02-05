@@ -16,14 +16,17 @@ class ItemsWidget extends StatefulWidget {
 class _ItemsWidgetState extends State<ItemsWidget> {
   var _isInit = true;
   var _isLoading = false;
+  String? user;
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Product>(context).fetchProducts().then((_) {
+      final prefs = await SharedPreferences.getInstance();
+    user = prefs.getString("uid");
+      Provider.of<Product>(context, listen: false).fetchProducts().then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -34,8 +37,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
   }
 
   Future<void> update(id) async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString("uid");
     await Provider.of<Product>(context, listen: false).updateStatus(user!, id!);
   }
 
@@ -90,10 +91,16 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                         onTap: () {
                           update(productsData.productItem[index]['_id']);
                         },
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: Colors.red,
-                        ),
+                        child: productsData.productItem[index]['usersFavorite']
+                                .contains(user)
+                            ? Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : Icon(
+                                Icons.favorite_border,
+                                color: Colors.red,
+                              ),
                       ),
                     ],
                   ),
